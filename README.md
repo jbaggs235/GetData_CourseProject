@@ -18,7 +18,7 @@ Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ort
 
 
 Github repository link:
-
+https://github.com/jbaggs235/GetData_CourseProject
 
 Instruction List:
 
