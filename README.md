@@ -23,10 +23,13 @@ https://github.com/jbaggs235/GetData_CourseProject
 Instruction List:
 
 Assumptions:
-1.	The working directory is set to the “UCI HAR Dataset” directory. And there are two subfolders containing the data named as “train” and “test”. Within “train” are the subject_train.txt, y_train.txt, and x_train.txt files. Within “test” are the subject_test.txt, y_test.txt, and x_test.txt files. Within the “UCI HAR Dataset” directory is the features.txt and activity_labels.txt files.
-2.	The “reshape” package is available to be loaded in the script.
+
+1. The working directory is set to the “UCI HAR Dataset” directory. And there are two subfolders containing the data named as “train” and “test”. Within “train” are the subject_train.txt, y_train.txt, and x_train.txt files. Within “test” are the subject_test.txt, y_test.txt, and x_test.txt files. Within the “UCI HAR Dataset” directory is the features.txt and activity_labels.txt files.
+
+2. The “reshape” package is available to be loaded in the script.
 
 Process (see R script run_analysis.R):
+
 1. The working directory is set to the train subdirectory, and the subject_train.txt, y_train.txt, and x_train.txt files are read into R using the read.table statement.
 
 2. The working directory is then set to the test subdirectory, and the subject_test.txt, y_test.txt, and x_test.txt files are read into R using the read.table statement.
