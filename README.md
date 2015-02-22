@@ -27,26 +27,45 @@ Assumptions:
 2.	The “reshape” package is available to be loaded in the script.
 
 Process (see R script run_analysis.R):
-1.	The working directory is set to the train subdirectory, and the subject_train.txt, y_train.txt, and x_train.txt files are read into R using the read.table statement.
-2.	The working directory is then set to the test subdirectory, and the subject_test.txt, y_test.txt, and x_test.txt files are read into R using the read.table statement.
-3.	The working directory is then set again to the “UCI HAR Dataset”, and the features.txt and activity_labels.txt files are read into R using the read.table statement.
-4.	Using the information in the features datafile, which contains 561 rows and 2 columns, the column names for the x_train and x_test datafiles are set to the variable names contained in the features datafile by creating a list of names from the features datafile.
-5.	Column names for the subject_train and subject_test datafiles are set to “Subject_ID” to provide descriptive variable names.
-6.	Column names for the y_train and y_test datafiles are set to “Activity_Code” to provide descriptive variable names.
-7.	Column names for the activity_labels datafile are set to “Activity_Code” and “Activity” to provide descriptive variable names. The datafile contains the list of 6 activities and the corresponding code. There are 6 rows and 2 columns.
-8.	The subject_train and subject_test datafiles contain the subject ID numbers for each of participants for each activity across multiple measurements. Each has 1 column and there are 7352 and 2947 rows respectively.
-9.	The y_train and y_test datafiles contain the activity codes for each of the participants and each activity across multiple measurements. Each file has 1 column and 7352 and 2947 rows respectively.
-10.	The x_train and x_test datafiles contain the 561 measurements for each participant and each activity described in the subject_train/test and y_train/test datafiles. Each file has 561 columns and 7352 and 2947 rows respectively.
-11.	 We extract only the mean and standard deviation measurements using the pattern matching function grep on the features datafile to match variables with either “mean()” or “std()” in the variable name. We build a list of those variable names from the features datafile. We then select only those columns in the x_train and x_test datafiles. In the end, 66 variable measurements containing mean() or std() were selected.
-12.	We then stack the subject_train, y_train, and x_train datafiles side by side or horizontally using the cbind function. This creates an intermediate datafile of 68 columns and 7352 rows, which now contains the Subject_ID, Activity_Code, and 66 measurement variables.
-13.	We then stack the subject_test, y_test, and x_test datafiles side by side or horizontally using the cbind function. This creates an intermediate datafile of 68 columns and 2947 rows, which now contains the Subject_ID, Activity_Code, and 66 measurement variables.
-14.	We then vertically stack the train and test datafiles using the rbind function creating a datafile of 68 columns and 10299 rows.
-15.	We then merge onto that datafile the descriptive activity labels from the activity_labels datafile using the merge function. The activity_code variable is our unique identifier between the two files for the merge. 
-16.	This now creates the datafile for step 4, which contains all the data from the train and test datafiles, uses descriptive variable names, extracts only mean and standard deviation measurements, and uses descriptive activity names.
-17.	We then load the reshape package.
-18.	Using the melt and cast functions with a mean argument, we create a datafile with 180 observations and 69 columns. This is the wide version of the final datafile for output in step 5. Three variables identify the subject_ID, activity_code, and activity. The remaining 66 variables describe the mean for each measurement. 
-19.	We use the melt function again to create a long version of the tidy datafile for output. This file contains 4 columns including the Subject_ID, Activity label, the Variable being measured, and the mean value of that variable for that particular participant and activity. The activity code column was removed and the columns were given descriptive variable names. This file contains 4 columns and 11880 rows. If there were 30 participants each doing 6 activities and 66 variables measured, one would expect 30*6*66 = 11880 observations.
-20.	The dataset created in the previous step (19) is our output file. This file is then saved to the working directory using the write.table function. The file is named “CourseProject_Tidy.txt”. This was the file submitted for the assignment.
+1. The working directory is set to the train subdirectory, and the subject_train.txt, y_train.txt, and x_train.txt files are read into R using the read.table statement.
+
+2. The working directory is then set to the test subdirectory, and the subject_test.txt, y_test.txt, and x_test.txt files are read into R using the read.table statement.
+
+3. The working directory is then set again to the “UCI HAR Dataset”, and the features.txt and activity_labels.txt files are read into R using the read.table statement.
+
+4. Using the information in the features datafile, which contains 561 rows and 2 columns, the column names for the x_train and x_test datafiles are set to the variable names contained in the features datafile by creating a list of names from the features datafile.
+
+5. Column names for the subject_train and subject_test datafiles are set to “Subject_ID” to provide descriptive variable names.
+
+6. Column names for the y_train and y_test datafiles are set to “Activity_Code” to provide descriptive variable names.
+
+7. Column names for the activity_labels datafile are set to “Activity_Code” and “Activity” to provide descriptive variable names. The datafile contains the list of 6 activities and the corresponding code. There are 6 rows and 2 columns.
+
+8. The subject_train and subject_test datafiles contain the subject ID numbers for each of participants for each activity across multiple measurements. Each has 1 column and there are 7352 and 2947 rows respectively.
+
+9. The y_train and y_test datafiles contain the activity codes for each of the participants and each activity across multiple measurements. Each file has 1 column and 7352 and 2947 rows respectively.
+
+10. The x_train and x_test datafiles contain the 561 measurements for each participant and each activity described in the subject_train/test and y_train/test datafiles. Each file has 561 columns and 7352 and 2947 rows respectively.
+
+11. We extract only the mean and standard deviation measurements using the pattern matching function grep on the features datafile to match variables with either “mean()” or “std()” in the variable name. We build a list of those variable names from the features datafile. We then select only those columns in the x_train and x_test datafiles. In the end, 66 variable measurements containing mean() or std() were selected.
+
+12. We then stack the subject_train, y_train, and x_train datafiles side by side or horizontally using the cbind function. This creates an intermediate datafile of 68 columns and 7352 rows, which now contains the Subject_ID, Activity_Code, and 66 measurement variables.
+
+13. We then stack the subject_test, y_test, and x_test datafiles side by side or horizontally using the cbind function. This creates an intermediate datafile of 68 columns and 2947 rows, which now contains the Subject_ID, Activity_Code, and 66 measurement variables.
+
+14. We then vertically stack the train and test datafiles using the rbind function creating a datafile of 68 columns and 10299 rows.
+
+15. We then merge onto that datafile the descriptive activity labels from the activity_labels datafile using the merge function. The activity_code variable is our unique identifier between the two files for the merge. 
+
+16. This now creates the datafile for step 4, which contains all the data from the train and test datafiles, uses descriptive variable names, extracts only mean and standard deviation measurements, and uses descriptive activity names.
+
+17. We then load the reshape package.
+
+18. Using the melt and cast functions with a mean argument, we create a datafile with 180 observations and 69 columns. This is the wide version of the final datafile for output in step 5. Three variables identify the subject_ID, activity_code, and activity. The remaining 66 variables describe the mean for each measurement. 
+
+19. We use the melt function again to create a long version of the tidy datafile for output. This file contains 4 columns including the Subject_ID, Activity label, the Variable being measured, and the mean value of that variable for that particular participant and activity. The activity code column was removed and the columns were given descriptive variable names. This file contains 4 columns and 11880 rows. If there were 30 participants each doing 6 activities and 66 variables measured, one would expect 30*6*66 = 11880 observations.
+
+20. The dataset created in the previous step (19) is our output file. This file is then saved to the working directory using the write.table function. The file is named “CourseProject_Tidy.txt”. This was the file submitted for the assignment.
 
 
 Code Book:
